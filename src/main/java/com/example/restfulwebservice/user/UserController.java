@@ -36,7 +36,14 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public void createUser(@RequestBody User user) { //전달받고자 하는 데이터가 RequestBody 형식의 역할을 함을 의미
+    public ResponseEntity<User> createUser(@RequestBody User user){ //반환하는 값이 User 클래스 값임
         User savedUser = service.save(user);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest() //현재 가지고 있는 Request 값을 사용한다는 의미
+                .path("/{id}") //반환할 때 URI 뒤에 /{id}를 추가
+                .buildAndExpand(savedUser.getId()) //{id}에 savedUser.getId()값을 넣어줌
+                .toUri(); //위 모든 것을 URI형태로 변환
+
+        return ResponseEntity.created(location).build(); //위 location을 빌드해서 반환함
     }
 }
