@@ -6,6 +6,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -50,5 +51,14 @@ public class UserController {
                 .toUri(); //위 모든 것을 URI형태로 변환
 
         return ResponseEntity.created(location).build(); //위 location을 빌드해서 반환함
+    }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable int id) {
+        User user = service.deleteById(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
     }
 }
