@@ -61,4 +61,12 @@ public class UserController {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
     }
+
+    @PutMapping("/users/modify")
+    public User modifyUser(@RequestBody Map<String, String> param){
+        int id = Integer.parseInt(param.get("id"));
+        String name = param.get("name");
+        User modifiedUser = service.modifyUser(id, name);
+        return modifiedUser;
+    }
 }

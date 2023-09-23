@@ -59,4 +59,19 @@ public class UserDaoService {
         }
         return null;
     }
+
+    public User modifyUser(int id, String name){
+        Iterator<User> iterator =  users.iterator();
+
+        while(iterator.hasNext()){
+            User user = iterator.next();
+
+            if(user.getId() == id){
+                user.setId(user.getId());
+                user.setName(name);
+                return user;
+            }
+        }
+        return null;
+    }
 }
