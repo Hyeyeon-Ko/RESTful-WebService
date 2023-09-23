@@ -1,9 +1,10 @@
 package com.example.restfulwebservice.user;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -32,5 +33,10 @@ public class UserController {
     @GetMapping("/users/{id}")
     public User retrieveUser(@PathVariable int id) {
         return service.findOne(id);
+    }
+
+    @PostMapping("/users")
+    public void createUser(@RequestBody User user) { //전달받고자 하는 데이터가 RequestBody 형식의 역할을 함을 의미
+        User savedUser = service.save(user);
     }
 }
