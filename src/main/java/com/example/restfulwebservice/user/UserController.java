@@ -32,7 +32,12 @@ public class UserController {
     //path variable은 항상 문자 형태로 전달. 여기서 선언한 path variable의 타입으로 자동 변환됨
     @GetMapping("/users/{id}")
     public User retrieveUser(@PathVariable int id) {
-        return service.findOne(id);
+        User user = service.findOne(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+        return user;
     }
 
     @PostMapping("/users")
