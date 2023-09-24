@@ -1,5 +1,6 @@
 package com.example.restfulwebservice.user;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user){ //반환하는 값이 User 클래스 값임
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){ //반환하는 값이 User 클래스 값임
         User savedUser = service.save(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest() //현재 가지고 있는 Request 값을 사용한다는 의미
