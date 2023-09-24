@@ -57,6 +57,7 @@
             <artifactId>spring-boot-starter-validation</artifactId>
             <version>2.5.2</version>
         </dependency>
+        <!--자바 버전이 업그레이드 되면서 제거된 모듈-->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
