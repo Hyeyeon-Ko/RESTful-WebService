@@ -15,9 +15,9 @@ public class UserDaoService {
 
     //데이터베이스에 3개의 데이터가 들어있다고 가정
     static {
-        users.add(new User(1, "Kenneth", new Date()));
-        users.add(new User(2, "Alice", new Date()));
-        users.add(new User(3, "Elena", new Date()));
+        users.add(new User(1, "Kenneth", new Date(), "pass1", "701010-1111111"));
+        users.add(new User(2, "Alice", new Date(), "pass2", "801010-1111111"));
+        users.add(new User(3, "Elena", new Date(), "pass3", "901010-1111111"));
     }
 
     // 모든 사용자를 조회하는 메소드
