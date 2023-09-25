@@ -34,7 +34,10 @@ public class AdminUserController {
     }
 
     //GET /admin/users/1 -> /admin/v1/users/1
-    @GetMapping("/v1/users/{id}")
+//    @GetMapping("/v1/users/{id}")
+//    @GetMapping(value = "/users/{id}/", params = "version=1")
+//    @GetMapping(value = "/users/{id}", headers="X-API-VERSION=1")
+    @GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv1+json")
     public MappingJacksonValue retrieveUserV1(@PathVariable int id) {
         User user = service.findOne(id);
 
@@ -53,27 +56,30 @@ public class AdminUserController {
         return mapping;
     }
 
-    @GetMapping("/v2/users/{id}")
+//    @GetMapping("/v2/users/{id}")
+//    @GetMapping(value = "/users/{id}/", params = "version=2")
+//    @GetMapping(value = "/users/{id}", headers="X-API-VERSION=2")
+    @GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv2+json")
     public MappingJacksonValue retrieveUserV2(@PathVariable int id) {
-        User user = service.findOne(id);
+                    User user = service.findOne(id);
 
-        if (user == null) {
-            throw new UserNotFoundException(String.format("ID[%s] not found", id));
-        }
+                    if (user == null) {
+                        throw new UserNotFoundException(String.format("ID[%s] not found", id));
+                    }
 
-        //User -> UserV2
-        UserV2 userV2 = new UserV2();
-        BeanUtils.copyProperties(user, userV2);
-        userV2.setGrade("VIP");
+                    //User -> UserV2
+                    UserV2 userV2 = new UserV2();
+                    BeanUtils.copyProperties(user, userV2);
+                    userV2.setGrade("VIP");
 
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
-                .filterOutAllExcept("id", "name", "joinDate", "grade");
+                    SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+                            .filterOutAllExcept("id", "name", "joinDate", "grade");
 
-        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfoV2", filter);
+                    FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfoV2", filter);
 
-        MappingJacksonValue mapping = new MappingJacksonValue(userV2);
-        mapping.setFilters(filters);
+                    MappingJacksonValue mapping = new MappingJacksonValue(userV2);
+                    mapping.setFilters(filters);
 
-        return mapping;
-    }
+                    return mapping;
+                }
 }
