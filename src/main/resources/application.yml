@@ -20,3 +20,9 @@ spring-doc:
     operations-sorter: alpha
     doc-expansion: none
   pre-loading-enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
