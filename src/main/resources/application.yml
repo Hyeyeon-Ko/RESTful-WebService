@@ -8,6 +8,10 @@ logging:
 spring:
   messages:
     basename: messages
+  security:
+    user:
+      name: username
+      password: passw0rd
 
 spring-doc:
   default-consumes-media-type: application/json
@@ -26,3 +30,4 @@ management:
     web:
       exposure:
         include: '*'
+
