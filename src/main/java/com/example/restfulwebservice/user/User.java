@@ -1,10 +1,7 @@
 package com.example.restfulwebservice.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -39,4 +37,16 @@ public class User {
 
     @Schema(description = "사용자 주민번호를 입력해 주세요.")
     private String ssn;
+
+    // 사용자가 포스팅할 수 있는 정보를 저장하는 필드
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
+    public User(int id, String name, Date joinDate, String password, String ssn) {
+        this.id = id;
+        this.name = name;
+        this.joinDate = joinDate;
+        this.password = password;
+        this.ssn = ssn;
+    }
 }
