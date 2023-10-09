@@ -1,8 +1,10 @@
 package com.example.restfulwebservice.user;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -16,8 +18,12 @@ import java.util.Date;
 @NoArgsConstructor
 //@JsonFilter("UserInfo")
 @Schema(description = "사용자 상세 정보를 위한 도메인 객체")
+@Table(name = "Users")
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer id;
 
     @Size(min=2, message = "Name은 2글자 이상 입력해 주세요.")
