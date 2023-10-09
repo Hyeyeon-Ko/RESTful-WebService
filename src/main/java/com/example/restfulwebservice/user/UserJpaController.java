@@ -18,21 +18,25 @@ public class UserJpaController {
     @Autowired
     private UserRepository userRepository;
 
-    //http://localhost:8088/jpa/users
+    // 전체 사용자 목록을 조회하는 findAll 메소드 사용
     @GetMapping("/users")
     public List<User> retrieveAllUsers() {
         return userRepository.findAll();
     }
 
+    // 개별 사용자 목록 조회 (가변 데이터 id)
     @GetMapping("/users/{id}")
     public EntityModel<User> retrieveUser(@PathVariable int id) {
 
+        // Optional<T> findById(ID var1)
+        // 리턴값이 Optional인 이유 : 데이터가 존재할수도 안할수도 있기 때문에
         Optional<User> user = userRepository.findById(id);
 
         if (!user.isPresent()) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
 
+        // HATEOAS 기능
         EntityModel<User> model = EntityModel.of(user.get());
         WebMvcLinkBuilder linkTo = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllUsers());
         model.add(linkTo.withRel("all-users"));
